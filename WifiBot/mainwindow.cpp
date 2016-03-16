@@ -23,7 +23,7 @@ void MainWindow::on_verticalSlider_valueChanged(int value)
 // Avancer
 void MainWindow::on_pushUp_pressed()
 {
-
+    socket.send(robot.move());
 }
 
 // Tourner à droite

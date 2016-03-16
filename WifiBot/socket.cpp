@@ -49,11 +49,7 @@ void Socket::readyRead()
     qDebug() << socket->readAll();
 }
 
-void Socket::send(){
+void Socket::send(QByteArray trame){
     qDebug() << "sending...";
-    /*QByteArray trame=trameTCP();
-    for(int i=0;i<100000;i++){
-        QTest::qSleep(25);
-        socket->write(trame);
-    }*/
+    socket->write(trame);
 }

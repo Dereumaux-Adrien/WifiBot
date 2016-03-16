@@ -13,7 +13,7 @@ public:
     explicit Socket(QObject *parent = 0);
 
     void connectSocket();
-    void send();
+    void send(QByteArray trame);
 
 signals:
 

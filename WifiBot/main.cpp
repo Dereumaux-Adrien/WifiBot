@@ -17,6 +17,5 @@ int main(int argc, char *argv[])
     w.show();
     Socket s;
     s.connectSocket();
-    s.send();
     return a.exec();
 }
