@@ -13,6 +13,8 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
     //"192.168.1.106"
+    MainWindow w;
+    w.show();
     Socket s;
     s.connectSocket();
     s.send();
