@@ -5,7 +5,7 @@ RobotControl::RobotControl()
 
 }
 
-RobotControl::move(short speed1, short speed2, BYTE speedFlag){
+void RobotControl::move(short speed1, short speed2, BYTE speedFlag){
    BYTE sbuff[7];
    sbuff[0] = 255 ;
    sbuff[1] = 0x07 ;

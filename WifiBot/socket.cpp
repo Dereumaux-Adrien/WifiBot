@@ -1,4 +1,5 @@
 #include "socket.h"
+#include <QTest>
 
 Socket::Socket(QObject *parent) :
     QObject(parent)
@@ -50,5 +51,9 @@ void Socket::readyRead()
 
 void Socket::send(){
     qDebug() << "sending...";
-    socket->write("\xAA");
+    /*QByteArray trame=trameTCP();
+    for(int i=0;i<100000;i++){
+        QTest::qSleep(25);
+        socket->write(trame);
+    }*/
 }
