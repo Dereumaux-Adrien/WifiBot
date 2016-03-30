@@ -3,19 +3,20 @@
 
 #include <windows.h>
 #include <QByteArray>
+#include "socket.h"
 
 class RobotControl
 {
 public:
     RobotControl();
-    QByteArray move();
-    short Crc16(QByteArray trame);
+    void move();
+    quint16 Crc16(QByteArray* trame);
 
 private:
+    Socket socket;
     char leftSpeed;
     char rightSpeed;
     char commandFlag;
-    char zero;
 };
 
 #endif // ROBOTCONTROL_H

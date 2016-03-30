@@ -4,6 +4,7 @@
 Socket::Socket(QObject *parent) :
     QObject(parent)
 {
+    connecter=false;
 }
 
 void Socket::connectSocket()
@@ -28,6 +29,7 @@ void Socket::connectSocket()
 
 void Socket::connected()
 {
+    connecter=true;
     qDebug() << "connected...";
 }
 
@@ -51,5 +53,10 @@ void Socket::readyRead()
 
 void Socket::send(QByteArray trame){
     qDebug() << "sending...";
-    socket->write(trame);
+    if(connecter && socket->open(QIODevice::ReadWrite))
+    {
+        socket->write(trame);
+        //socket->flush();
+        qDebug() << "message sent";
+    }
 }

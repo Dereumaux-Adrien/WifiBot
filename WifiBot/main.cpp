@@ -15,7 +15,5 @@ int main(int argc, char *argv[])
     //"192.168.1.106"
     MainWindow w;
     w.show();
-    Socket s;
-    s.connectSocket();
     return a.exec();
 }

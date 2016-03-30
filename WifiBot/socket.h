@@ -24,6 +24,7 @@ public slots:
     void readyRead();
 
 private:
+    bool connecter;
     QTcpSocket *socket;
 
 };

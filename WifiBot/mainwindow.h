@@ -4,7 +4,6 @@
 #include <QMainWindow>
 #include <QKeyEvent>
 #include "robotcontrol.h"
-#include "socket.h"
 
 namespace Ui {
 class MainWindow;
@@ -34,7 +33,6 @@ private slots:
 
 private:
     Ui::MainWindow *ui;
-    Socket socket;
     RobotControl robot;
     short speed ;
 };
