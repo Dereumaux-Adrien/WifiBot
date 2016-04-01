@@ -18,6 +18,7 @@ public:
     void setRightSpeed(char speed);
     void setLeftSpeed(char speed);
     void setCommandFlag(char flag);
+    void moveCamera(char direction);
 
 public slots:
     void MySlot();

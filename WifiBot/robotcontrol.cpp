@@ -1,6 +1,9 @@
 #include "robotcontrol.h"
 #include <QtCore>
 #include <QDebug>
+#include <QNetworkRequest>
+#include <QUrl>
+#include <QNetworkAccessManager>
 
 RobotControl::RobotControl()
 {
@@ -61,4 +64,22 @@ quint16 RobotControl::Crc16(QByteArray* trame){
         }
     }
     return crc;
+}
+
+void RobotControl::moveCamera(char direction){
+    /*QNetworkAccessManager nam;
+    QNetworkRequest req;
+    req.setUrl(QUrl("http://www.google.com"));
+    nam->get(myRequest);
+    /*if(direction='U'){
+        QDebug("jesuisla");
+        req=QNetworkRequest( QUrl( QString("http://192.168.1.106:8080/?action=command&dest=0&plugin=0&id=10094853&group=1&value=-200") ) );
+    }else if(direction='D'){
+        //req( QUrl( QString("http://ip.jsontest.com/") ) );
+    }else if(direction='R'){
+        //req( QUrl( QString("http://ip.jsontest.com/") ) );
+    }else if(direction='L'){
+        //req( QUrl( QString("http://ip.jsontest.com/") ) );
+    }*/
+    //mgr.get(req);
 }

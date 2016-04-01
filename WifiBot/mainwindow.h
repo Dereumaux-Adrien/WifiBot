@@ -40,10 +40,22 @@ private slots:
 
     void on_pushRight_released();
 
+    void on_pushCamUp_pressed();
+
+    void on_pushCamLeft_pressed();
+
+    void on_pushCamDown_pressed();
+
+    void on_pushCamRight_pressed();
+
 private:
     Ui::MainWindow *ui;
     RobotControl robot;
     short speed ;
+    bool upOn ;
+    bool downOn ;
+    bool rightOn ;
+    bool leftOn ;
 };
 
 #endif // MAINWINDOW_H
