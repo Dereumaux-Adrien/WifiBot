@@ -5,6 +5,11 @@ Socket::Socket(QObject *parent) :
     QObject(parent)
 {
     connecter=false;
+    IP="192.168.1.106";
+}
+
+void Socket::setIP(QString s){
+    IP=s;
 }
 
 void Socket::connectSocket()
@@ -18,7 +23,7 @@ void Socket::connectSocket()
 
     qDebug() << "connecting...";
 
-    socket->connectToHost("192.168.1.106", 15020);
+    socket->connectToHost(IP, 15020);
 
     //En attente de connexion
     if(!socket->waitForConnected(5000))

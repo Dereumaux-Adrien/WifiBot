@@ -19,6 +19,9 @@ public:
     void setLeftSpeed(char speed);
     void setCommandFlag(char flag);
     void moveCamera(char direction);
+    QString getIP();
+    void setIP(QString s);
+    void connexion();
 
 public slots:
     void MySlot();
@@ -29,6 +32,7 @@ private:
     char rightSpeed ;
     char leftSpeed ;
     char commandFlag ;
+    QString IP;
 
 
 };

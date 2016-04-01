@@ -7,13 +7,26 @@
 
 RobotControl::RobotControl()
 {
-    socket.connectSocket();
     rightSpeed = 0 ;
     leftSpeed = 0;
     commandFlag = 0;
+    IP="192.168.1.106";
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(MySlot()));
+}
+
+void RobotControl::connexion(){
+    socket.connectSocket();
     timer->start(25);
+}
+
+QString RobotControl::getIP(){
+    return IP;
+}
+
+void RobotControl::setIP(QString s){
+    IP=s;
+    socket.setIP(IP);
 }
 
 void RobotControl::move()
@@ -67,19 +80,22 @@ quint16 RobotControl::Crc16(QByteArray* trame){
 }
 
 void RobotControl::moveCamera(char direction){
-    /*QNetworkAccessManager nam;
-    QNetworkRequest req;
-    req.setUrl(QUrl("http://www.google.com"));
-    nam->get(myRequest);
-    /*if(direction='U'){
-        QDebug("jesuisla");
-        req=QNetworkRequest( QUrl( QString("http://192.168.1.106:8080/?action=command&dest=0&plugin=0&id=10094853&group=1&value=-200") ) );
-    }else if(direction='D'){
-        //req( QUrl( QString("http://ip.jsontest.com/") ) );
-    }else if(direction='R'){
-        //req( QUrl( QString("http://ip.jsontest.com/") ) );
-    }else if(direction='L'){
-        //req( QUrl( QString("http://ip.jsontest.com/") ) );
-    }*/
-    //mgr.get(req);
+    QNetworkAccessManager* nam = new QNetworkAccessManager(this);
+    if(direction=='U'){
+        QNetworkRequest req;
+        req.setUrl(QUrl("http://"+IP+":8080/?action=command&dest=0&plugin=0&id=10094853&group=1&value=-100"));
+        nam->get(req);
+    }else if(direction=='D'){
+        QNetworkRequest req;
+        req.setUrl(QUrl("http://"+IP+":8080/?action=command&dest=0&plugin=0&id=10094853&group=1&value=100"));
+        nam->get(req);
+    }else if(direction=='R'){
+        QNetworkRequest req;
+        req.setUrl(QUrl("http://"+IP+":8080/?action=command&dest=0&plugin=0&id=10094852&group=1&value=-100"));
+        nam->get(req);
+    }else if(direction=='L'){
+        QNetworkRequest req;
+        req.setUrl(QUrl("http://"+IP+":8080/?action=command&dest=0&plugin=0&id=10094852&group=1&value=100"));
+        nam->get(req);
+    }
 }

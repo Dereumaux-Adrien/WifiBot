@@ -14,6 +14,7 @@ public:
 
     void connectSocket();
     void send(QByteArray trame);
+    void setIP(QString s);
 
 signals:
 
@@ -26,6 +27,7 @@ public slots:
 private:
     bool connecter;
     QTcpSocket *socket;
+    QString IP;
 
 };
 

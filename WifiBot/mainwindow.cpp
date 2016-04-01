@@ -155,19 +155,19 @@ void MainWindow::keyPressEvent(QKeyEvent* event) {
     }
     else if (event->key() == Qt::Key_8)
     {
-        ui->pushCamUp->animateClick();
+        on_pushCamUp_pressed();
     }
     else if (event->key() == Qt::Key_4)
     {
-        ui->pushCamLeft->animateClick();
+        on_pushCamLeft_pressed();
     }
     else if (event->key() == Qt::Key_5)
     {
-        ui->pushCamDown->animateClick();
+        on_pushCamDown_pressed();
     }
     else if (event->key() == Qt::Key_6)
     {
-        ui->pushCamRight->animateClick();
+        on_pushCamRight_pressed();
     }
     else {
         QMainWindow::keyPressEvent(event);
@@ -220,15 +220,24 @@ void MainWindow::on_pushCamUp_pressed()
 
 void MainWindow::on_pushCamLeft_pressed()
 {
-
+    robot.moveCamera('L');
 }
 
 void MainWindow::on_pushCamDown_pressed()
 {
-
+    robot.moveCamera('D');
 }
 
 void MainWindow::on_pushCamRight_pressed()
 {
-
+    robot.moveCamera('R');
 }
+
+void MainWindow::on_pushConnect_pressed()
+{
+    QString ip=ui->lineEdit->text();
+    robot.setIP(ip);
+    robot.connexion();
+}
+
+

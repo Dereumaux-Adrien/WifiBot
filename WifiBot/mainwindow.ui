@@ -237,6 +237,32 @@
      </url>
     </property>
    </widget>
+   <widget class="QPushButton" name="pushConnect">
+    <property name="geometry">
+     <rect>
+      <x>490</x>
+      <y>340</y>
+      <width>75</width>
+      <height>23</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Connect</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>340</y>
+      <width>161</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>192.168.1.106</string>
+    </property>
+   </widget>
   </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
@@ -244,7 +270,7 @@
      <x>0</x>
      <y>0</y>
      <width>873</width>
-     <height>20</height>
+     <height>21</height>
     </rect>
    </property>
   </widget>
