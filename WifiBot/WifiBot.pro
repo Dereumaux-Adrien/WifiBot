@@ -26,5 +26,4 @@ HEADERS  += mainwindow.h \
 
 FORMS    += mainwindow.ui
 
-DISTFILES += \
-    WifiBot.pro.user
+DISTFILES +=

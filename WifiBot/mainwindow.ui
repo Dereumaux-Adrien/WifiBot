@@ -91,6 +91,9 @@
     </property>
    </widget>
    <widget class="QPushButton" name="pushRight">
+    <property name="enabled">
+     <bool>true</bool>
+    </property>
     <property name="geometry">
      <rect>
       <x>90</x>
@@ -241,7 +244,7 @@
      <x>0</x>
      <y>0</y>
      <width>873</width>
-     <height>21</height>
+     <height>20</height>
     </rect>
    </property>
   </widget>

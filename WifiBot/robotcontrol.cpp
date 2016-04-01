@@ -1,11 +1,16 @@
 #include "robotcontrol.h"
+#include <QtCore>
+#include <QDebug>
 
 RobotControl::RobotControl()
 {
-    leftSpeed=120;
-    rightSpeed=120;
-    commandFlag=80;
     socket.connectSocket();
+    rightSpeed = 0 ;
+    leftSpeed = 0;
+    commandFlag = 0;
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(MySlot()));
+    timer->start(25);
 }
 
 void RobotControl::move()
@@ -24,6 +29,22 @@ void RobotControl::move()
     trame.append((char)(crc>>8));
     socket.send(trame);
 
+}
+
+void RobotControl::MySlot(){
+    move();
+}
+
+void RobotControl::setRightSpeed(char speed){
+    rightSpeed = speed ;
+}
+
+void RobotControl::setLeftSpeed(char speed){
+    leftSpeed = speed ;
+}
+
+void RobotControl::setCommandFlag(char flag){
+    commandFlag = flag;
 }
 
 quint16 RobotControl::Crc16(QByteArray* trame){

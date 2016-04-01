@@ -29,7 +29,16 @@ private slots:
     void on_pushDown_pressed();
 
     void keyPressEvent(QKeyEvent* event);
+    void keyReleaseEvent(QKeyEvent* event);
 
+
+    void on_pushUp_released();
+
+    void on_pushLeft_released();
+
+    void on_pushDown_released();
+
+    void on_pushRight_released();
 
 private:
     Ui::MainWindow *ui;

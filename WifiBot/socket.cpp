@@ -52,7 +52,6 @@ void Socket::readyRead()
 }
 
 void Socket::send(QByteArray trame){
-    qDebug() << "sending...";
     if(connecter && socket->open(QIODevice::ReadWrite))
     {
         socket->write(trame);
