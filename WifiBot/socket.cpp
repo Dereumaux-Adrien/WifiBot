@@ -45,15 +45,15 @@ void Socket::disconnected()
 
 void Socket::bytesWritten(qint64 bytes)
 {
-    qDebug() << bytes << " bytes written...";
+    //qDebug() << bytes << " bytes written...";
 }
 
 void Socket::readyRead()
 {
-    qDebug() << "reading...";
-
     // read the data from the socket
-    qDebug() << socket->readAll();
+    buffer.clear();
+    buffer.append(socket->read(21), 21);
+    socket->readAll();
 }
 
 void Socket::send(QByteArray trame){
@@ -61,6 +61,9 @@ void Socket::send(QByteArray trame){
     {
         socket->write(trame);
         //socket->flush();
-        qDebug() << "message sent";
     }
+}
+
+QByteArray Socket::getBuffer(){
+    return buffer;
 }

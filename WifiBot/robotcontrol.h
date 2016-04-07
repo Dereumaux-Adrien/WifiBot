@@ -22,6 +22,7 @@ public:
     QString getIP();
     void setIP(QString s);
     void connexion();
+    void traitementRetour();
 
 public slots:
     void MySlot();
@@ -33,8 +34,7 @@ private:
     char leftSpeed ;
     char commandFlag ;
     QString IP;
-
-
+    float batterie;
 };
 
 #endif // ROBOTCONTROL_H

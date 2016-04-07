@@ -10,6 +10,7 @@ RobotControl::RobotControl()
     rightSpeed = 0 ;
     leftSpeed = 0;
     commandFlag = 0;
+    batterie=0;
     IP="192.168.1.106";
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(MySlot()));
@@ -49,6 +50,7 @@ void RobotControl::move()
 
 void RobotControl::MySlot(){
     move();
+    traitementRetour();
 }
 
 void RobotControl::setRightSpeed(char speed){
@@ -97,5 +99,19 @@ void RobotControl::moveCamera(char direction){
         QNetworkRequest req;
         req.setUrl(QUrl("http://"+IP+":8080/?action=command&dest=0&plugin=0&id=10094852&group=1&value=100"));
         nam->get(req);
+    }else if(direction=='F'){
+        /*QNetworkRequest req;
+        req.setUrl(QUrl("http://"+IP+":8080/?action=command&dest=0&plugin=0&id=10094855&group=1&value=1"));
+        nam->get(req);
+        req.setUrl(QUrl("http://"+IP+":8080/?action=command&dest=0&plugin=0&id=10094854&group=1&value=1"));
+        nam->get(req);*/
     }
+}
+
+void RobotControl::traitementRetour(){
+    QByteArray buffer=socket.getBuffer();
+    if(!buffer.isEmpty()){
+        batterie=((unsigned char)buffer.at(2));
+    }
+    qDebug() << batterie;
 }

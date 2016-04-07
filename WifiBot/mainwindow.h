@@ -50,6 +50,8 @@ private slots:
 
     void on_pushConnect_pressed();
 
+    void on_pushCamFront_pressed();
+
 private:
     Ui::MainWindow *ui;
     RobotControl robot;

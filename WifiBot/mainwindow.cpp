@@ -169,6 +169,10 @@ void MainWindow::keyPressEvent(QKeyEvent* event) {
     {
         on_pushCamRight_pressed();
     }
+    else if (event->key() == Qt::Key_9)
+    {
+        on_pushCamFront_pressed();
+    }
     else {
         QMainWindow::keyPressEvent(event);
     }
@@ -207,6 +211,10 @@ void MainWindow::keyReleaseEvent(QKeyEvent* event) {
     {
         ui->pushCamRight->animateClick();
     }
+    else if (event->key() == Qt::Key_9)
+    {
+        ui->pushCamRight->animateClick();
+    }
     else {
         QMainWindow::keyPressEvent(event);
     }
@@ -233,11 +241,14 @@ void MainWindow::on_pushCamRight_pressed()
     robot.moveCamera('R');
 }
 
+void MainWindow::on_pushCamFront_pressed()
+{
+    robot.moveCamera('F');
+}
+
 void MainWindow::on_pushConnect_pressed()
 {
     QString ip=ui->lineEdit->text();
     robot.setIP(ip);
     robot.connexion();
 }
-
-

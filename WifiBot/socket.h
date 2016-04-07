@@ -5,6 +5,7 @@
 #include <QTcpSocket>
 #include <QAbstractSocket>
 #include <QDebug>
+#include<QFile>
 
 class Socket : public QObject
 {
@@ -23,11 +24,13 @@ public slots:
     void disconnected();
     void bytesWritten(qint64 bytes);
     void readyRead();
+    QByteArray getBuffer();
 
 private:
     bool connecter;
     QTcpSocket *socket;
     QString IP;
+    QByteArray buffer;
 
 };
 
