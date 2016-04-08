@@ -53,6 +53,18 @@ private slots:
 
     void on_pushCamFront_pressed();
 
+    void on_pushCamUp_released();
+
+    void on_pushCamLeft_released();
+
+    void on_pushCamDown_released();
+
+    void on_pushCamRight_released();
+
+    void on_pushCamFront_released();
+
+    void on_cameraSpeed_valueChanged(int value);
+
 public slots:
     void MySlot();
 
@@ -65,6 +77,7 @@ private:
     bool downOn ;
     bool rightOn ;
     bool leftOn ;
+    bool cameraMoving;
 };
 
 #endif // MAINWINDOW_H

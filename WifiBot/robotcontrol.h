@@ -27,7 +27,14 @@ public:
     void setIP(QString s);
     void connexion();
     void traitementRetour();
-    float getBatterie();
+    int getBatterie();
+    int getRealSpeedR();
+    int getRealSpeedL();
+    int getIRFR() ;
+    int getIRFL() ;
+    int getIRBR() ;
+    int getIRBL() ;
+    void setCameraSpeed(int cameraSpeed);
 
 public slots:
     void MySlot();
@@ -38,8 +45,15 @@ private:
     char rightSpeed ;
     char leftSpeed ;
     char commandFlag ;
+    int cameraSpeed;
     QString IP;
-    float batterie;
+    int batterie;
+    int realSpeedL;
+    int realSpeedR;
+    int IRFR ;
+    int IRFL ;
+    int IRBR ;
+    int IRBL ;
 };
 
 #endif // ROBOTCONTROL_H

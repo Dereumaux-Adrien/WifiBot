@@ -6,9 +6,14 @@ RobotControl::RobotControl()
     leftSpeed = 0;
     commandFlag = 0;
     batterie=0;
+    cameraSpeed=100;
     IP="192.168.1.106";
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(MySlot()));
+    IRBL = 0 ;
+    IRBR = 0 ;
+    IRFL = 0 ;
+    IRFR = 0 ;
 }
 
 void RobotControl::connexion(){
@@ -80,26 +85,24 @@ void RobotControl::moveCamera(char direction){
     QNetworkAccessManager* nam = new QNetworkAccessManager(this);
     if(direction=='U'){
         QNetworkRequest req;
-        req.setUrl(QUrl("http://"+IP+":8080/?action=command&dest=0&plugin=0&id=10094853&group=1&value=-100"));
+        req.setUrl(QUrl("http://"+IP+":8080/?action=command&dest=0&plugin=0&id=10094853&group=1&value=-"+ QString::number(cameraSpeed)));
         nam->get(req);
     }else if(direction=='D'){
         QNetworkRequest req;
-        req.setUrl(QUrl("http://"+IP+":8080/?action=command&dest=0&plugin=0&id=10094853&group=1&value=100"));
+        req.setUrl(QUrl("http://"+IP+":8080/?action=command&dest=0&plugin=0&id=10094853&group=1&value="+ QString::number(cameraSpeed)));
         nam->get(req);
     }else if(direction=='R'){
         QNetworkRequest req;
-        req.setUrl(QUrl("http://"+IP+":8080/?action=command&dest=0&plugin=0&id=10094852&group=1&value=-100"));
+        req.setUrl(QUrl("http://"+IP+":8080/?action=command&dest=0&plugin=0&id=10094852&group=1&value=-"+ QString::number(cameraSpeed)));
         nam->get(req);
     }else if(direction=='L'){
         QNetworkRequest req;
-        req.setUrl(QUrl("http://"+IP+":8080/?action=command&dest=0&plugin=0&id=10094852&group=1&value=100"));
+        req.setUrl(QUrl("http://"+IP+":8080/?action=command&dest=0&plugin=0&id=10094852&group=1&value="+ QString::number(cameraSpeed)));
         nam->get(req);
     }else if(direction=='F'){
-        /*QNetworkRequest req;
-        req.setUrl(QUrl("http://"+IP+":8080/?action=command&dest=0&plugin=0&id=10094855&group=1&value=1"));
+        QNetworkRequest req;
+        req.setUrl(QUrl("http://"+IP+":8080/?action=command&dest=0&plugin=0&id=168062211&group=1&value=3"));
         nam->get(req);
-        req.setUrl(QUrl("http://"+IP+":8080/?action=command&dest=0&plugin=0&id=10094854&group=1&value=1"));
-        nam->get(req);*/
     }
 }
 
@@ -107,10 +110,47 @@ void RobotControl::traitementRetour(){
     QByteArray buffer=socket.getBuffer();
     if(!buffer.isEmpty()){
         batterie=((unsigned char)buffer.at(2));
+        realSpeedL=((unsigned char)buffer.at(1) << 8) + (unsigned char)buffer.at(0);
+        realSpeedR=((unsigned char)buffer.at(10) << 8) + (unsigned char)buffer.at(9);
+        if (realSpeedL > 32767)
+            realSpeedL-=65536;
+        if (realSpeedR > 32767)
+            realSpeedR-=65536;
+        IRFL=(unsigned char)buffer.at(3);
+        IRBR=(unsigned char)buffer.at(4);
+        IRFR=(unsigned char)buffer.at(11);
+        IRBL=(unsigned char)buffer.at(12);
     }
-    qDebug() << batterie;
 }
 
-float RobotControl::getBatterie(){
+int RobotControl::getBatterie(){
     return batterie;
+}
+
+int RobotControl::getRealSpeedR(){
+    return realSpeedR ;
+}
+
+int RobotControl::getRealSpeedL(){
+    return realSpeedL ;
+}
+
+int RobotControl::getIRBL(){
+    return IRBL ;
+}
+
+int RobotControl::getIRBR(){
+    return IRBR ;
+}
+
+int RobotControl::getIRFL(){
+    return IRFL ;
+}
+
+int RobotControl::getIRFR(){
+    return IRFR ;
+}
+
+void RobotControl::setCameraSpeed(int cameraSpeed){
+    this->cameraSpeed=cameraSpeed;
 }

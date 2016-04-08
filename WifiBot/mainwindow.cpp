@@ -11,6 +11,7 @@ MainWindow::MainWindow(QWidget *parent) :
     downOn = false ;
     leftOn = false ;
     rightOn = false ;
+    cameraMoving = false;
 
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(MySlot()));
@@ -23,16 +24,23 @@ MainWindow::~MainWindow()
 }
 
 void MainWindow::MySlot(){
-    if(robot.getBatterie()/1.70>100){
+    if(((float)robot.getBatterie())/1.70>100){
         ui->batLevel->setValue(100);
         ui->viewCharging->setEnabled(true);
     }else {
         ui->viewCharging->setEnabled(false);
-        if(robot.getBatterie()/1.32>100)
+        if(((float)robot.getBatterie())/1.32>100)
             ui->batLevel->setValue(100);
         else
-            ui->batLevel->setValue(robot.getBatterie()/1.32);
+            ui->batLevel->setValue(((float)robot.getBatterie())/1.32);
     }
+
+    ui->viewRightSpeed->display(robot.getRealSpeedR());
+    ui->ViewLeftSpeed->display(robot.getRealSpeedL());
+    ui->viewIRFL->setValue(robot.getIRFL());
+    ui->viewIRBL->setValue(robot.getIRBL());
+    ui->viewIRFR->setValue(robot.getIRFR());
+    ui->viewIRBR->setValue(robot.getIRBR());
 }
 
 void MainWindow::on_verticalSlider_valueChanged(int value)
@@ -91,67 +99,67 @@ void MainWindow::on_pushRight_pressed()
     }
 }
 
-    void MainWindow::on_pushRight_released()
-    {
-        rightOn = false ;
-        robot.setRightSpeed(0);
-        robot.setLeftSpeed(0);
+void MainWindow::on_pushRight_released()
+{
+    rightOn = false ;
+    robot.setRightSpeed(0);
+    robot.setLeftSpeed(0);
+    robot.setCommandFlag(0);
+}
+
+// Tourner à gauche
+void MainWindow::on_pushLeft_pressed()
+{
+    leftOn = true ;
+    if(upOn && !downOn && !rightOn){
+        robot.setRightSpeed(speed);
+        robot.setLeftSpeed(speed/4);
+        robot.setCommandFlag(80);
+    }else if(!upOn && downOn && !rightOn){
+        robot.setRightSpeed(speed);
+        robot.setLeftSpeed(speed/4);
+        robot.setCommandFlag(0);
+    }else{
+        robot.setRightSpeed(speed);
+        robot.setLeftSpeed(speed);
+        robot.setCommandFlag(16);
+    }
+}
+
+void MainWindow::on_pushLeft_released()
+{
+    leftOn = false ;
+    robot.setRightSpeed(0);
+    robot.setLeftSpeed(0);
+    robot.setCommandFlag(0);
+}
+
+// Reculer
+void MainWindow::on_pushDown_pressed()
+{
+    downOn = true ;
+    if(rightOn && !leftOn && !upOn){
+        robot.setRightSpeed(speed/4);
+        robot.setLeftSpeed(speed);
+        robot.setCommandFlag(0);
+    }else if(!rightOn && leftOn && !upOn){
+        robot.setRightSpeed(speed);
+        robot.setLeftSpeed(speed/4);
+        robot.setCommandFlag(0);
+    }else{
+        robot.setRightSpeed(speed);
+        robot.setLeftSpeed(speed);
         robot.setCommandFlag(0);
     }
+}
 
-    // Tourner à gauche
-    void MainWindow::on_pushLeft_pressed()
-    {
-        leftOn = true ;
-        if(upOn && !downOn && !rightOn){
-            robot.setRightSpeed(speed);
-            robot.setLeftSpeed(speed/4);
-            robot.setCommandFlag(80);
-        }else if(!upOn && downOn && !rightOn){
-            robot.setRightSpeed(speed);
-            robot.setLeftSpeed(speed/4);
-            robot.setCommandFlag(0);
-        }else{
-            robot.setRightSpeed(speed);
-            robot.setLeftSpeed(speed);
-            robot.setCommandFlag(16);
-        }
-    }
-
-    void MainWindow::on_pushLeft_released()
-    {
-        leftOn = false ;
-        robot.setRightSpeed(0);
-        robot.setLeftSpeed(0);
-        robot.setCommandFlag(0);
-    }
-
-    // Reculer
-    void MainWindow::on_pushDown_pressed()
-    {
-        downOn = true ;
-        if(rightOn && !leftOn && !upOn){
-            robot.setRightSpeed(speed/4);
-            robot.setLeftSpeed(speed);
-            robot.setCommandFlag(0);
-        }else if(!rightOn && leftOn && !upOn){
-            robot.setRightSpeed(speed);
-            robot.setLeftSpeed(speed/4);
-            robot.setCommandFlag(0);
-        }else{
-            robot.setRightSpeed(speed);
-            robot.setLeftSpeed(speed);
-            robot.setCommandFlag(0);
-        }
-    }
-
-    void MainWindow::on_pushDown_released()
-    {
-        downOn = false ;
-        robot.setRightSpeed(0);
-        robot.setLeftSpeed(0);
-        robot.setCommandFlag(0);
-    }
+void MainWindow::on_pushDown_released()
+{
+    downOn = false ;
+    robot.setRightSpeed(0);
+    robot.setLeftSpeed(0);
+    robot.setCommandFlag(0);
+}
 
 void MainWindow::keyPressEvent(QKeyEvent* event) {
     if (event->key() == Qt::Key_Q)
@@ -164,7 +172,7 @@ void MainWindow::keyPressEvent(QKeyEvent* event) {
     }
     else if (event->key() == Qt::Key_D)
     {
-       on_pushRight_pressed();
+        on_pushRight_pressed();
     }
     else if (event->key() == Qt::Key_S)
     {
@@ -214,23 +222,23 @@ void MainWindow::keyReleaseEvent(QKeyEvent* event) {
     }
     else if (event->key() == Qt::Key_8)
     {
-        ui->pushCamUp->animateClick();
+        on_pushCamUp_released();
     }
     else if (event->key() == Qt::Key_4)
     {
-        ui->pushCamLeft->animateClick();
+        on_pushCamLeft_released();
     }
     else if (event->key() == Qt::Key_5)
     {
-        ui->pushCamDown->animateClick();
+        on_pushCamDown_released();
     }
     else if (event->key() == Qt::Key_6)
     {
-        ui->pushCamRight->animateClick();
+        on_pushCamRight_released();
     }
     else if (event->key() == Qt::Key_9)
     {
-        ui->pushCamRight->animateClick();
+        on_pushCamFront_released();
     }
     else {
         QMainWindow::keyPressEvent(event);
@@ -240,27 +248,42 @@ void MainWindow::keyReleaseEvent(QKeyEvent* event) {
 
 void MainWindow::on_pushCamUp_pressed()
 {
-    robot.moveCamera('U');
+    if(!cameraMoving){
+        cameraMoving=true;
+        robot.moveCamera('U');
+    }
 }
 
 void MainWindow::on_pushCamLeft_pressed()
 {
-    robot.moveCamera('L');
+    if(!cameraMoving){
+        cameraMoving=true;
+        robot.moveCamera('L');
+    }
 }
 
 void MainWindow::on_pushCamDown_pressed()
 {
-    robot.moveCamera('D');
+    if(!cameraMoving){
+        cameraMoving=true;
+        robot.moveCamera('D');
+    }
 }
 
 void MainWindow::on_pushCamRight_pressed()
 {
-    robot.moveCamera('R');
+    if(!cameraMoving){
+        cameraMoving=true;
+        robot.moveCamera('R');
+    }
 }
 
 void MainWindow::on_pushCamFront_pressed()
 {
-    robot.moveCamera('F');
+    if(!cameraMoving){
+        cameraMoving=true;
+        robot.moveCamera('F');
+    }
 }
 
 void MainWindow::on_pushConnect_pressed()
@@ -268,4 +291,36 @@ void MainWindow::on_pushConnect_pressed()
     QString ip=ui->lineEdit->text();
     robot.setIP(ip);
     robot.connexion();
+}
+
+void MainWindow::on_pushCamUp_released()
+{
+    cameraMoving=false;
+}
+
+void MainWindow::on_pushCamLeft_released()
+{
+    cameraMoving=false;
+}
+
+void MainWindow::on_pushCamDown_released()
+{
+    cameraMoving=false;
+}
+
+void MainWindow::on_pushCamRight_released()
+{
+    cameraMoving=false;
+}
+
+void MainWindow::on_pushCamFront_released()
+{
+    cameraMoving=false;
+}
+
+void MainWindow::on_cameraSpeed_valueChanged(int value)
+{
+    QString s = "Vitesse : " + QString::number(value);
+    ui->viewSpeedCamera->setText(s);
+    robot.setCameraSpeed(value);
 }
