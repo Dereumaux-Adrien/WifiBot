@@ -5,7 +5,8 @@
 #include <QTcpSocket>
 #include <QAbstractSocket>
 #include <QDebug>
-#include<QFile>
+#include <QFile>
+#include <QTest>
 
 class Socket : public QObject
 {

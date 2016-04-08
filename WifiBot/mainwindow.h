@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QKeyEvent>
+#include <QtCore>
 #include "robotcontrol.h"
 
 namespace Ui {
@@ -52,9 +53,13 @@ private slots:
 
     void on_pushCamFront_pressed();
 
+public slots:
+    void MySlot();
+
 private:
     Ui::MainWindow *ui;
     RobotControl robot;
+    QTimer *timer ;
     short speed ;
     bool upOn ;
     bool downOn ;

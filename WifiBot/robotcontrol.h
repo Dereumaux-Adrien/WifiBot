@@ -3,8 +3,12 @@
 
 #include <windows.h>
 #include <QByteArray>
-#include "socket.h"
 #include <QtCore>
+#include <QDebug>
+#include <QNetworkRequest>
+#include <QUrl>
+#include <QNetworkAccessManager>
+#include "socket.h"
 
 class RobotControl : public QObject
 {
@@ -23,6 +27,7 @@ public:
     void setIP(QString s);
     void connexion();
     void traitementRetour();
+    float getBatterie();
 
 public slots:
     void MySlot();

@@ -11,11 +11,28 @@ MainWindow::MainWindow(QWidget *parent) :
     downOn = false ;
     leftOn = false ;
     rightOn = false ;
+
+    timer = new QTimer(this);
+    connect(timer, SIGNAL(timeout()), this, SLOT(MySlot()));
+    timer->start(100);
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::MySlot(){
+    if(robot.getBatterie()/1.70>100){
+        ui->batLevel->setValue(100);
+        ui->viewCharging->setEnabled(true);
+    }else {
+        ui->viewCharging->setEnabled(false);
+        if(robot.getBatterie()/1.32>100)
+            ui->batLevel->setValue(100);
+        else
+            ui->batLevel->setValue(robot.getBatterie()/1.32);
+    }
 }
 
 void MainWindow::on_verticalSlider_valueChanged(int value)

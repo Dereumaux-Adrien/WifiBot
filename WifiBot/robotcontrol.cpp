@@ -1,9 +1,4 @@
 #include "robotcontrol.h"
-#include <QtCore>
-#include <QDebug>
-#include <QNetworkRequest>
-#include <QUrl>
-#include <QNetworkAccessManager>
 
 RobotControl::RobotControl()
 {
@@ -114,4 +109,8 @@ void RobotControl::traitementRetour(){
         batterie=((unsigned char)buffer.at(2));
     }
     qDebug() << batterie;
+}
+
+float RobotControl::getBatterie(){
+    return batterie;
 }

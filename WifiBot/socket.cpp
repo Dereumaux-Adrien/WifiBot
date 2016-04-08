@@ -1,5 +1,4 @@
 #include "socket.h"
-#include <QTest>
 
 Socket::Socket(QObject *parent) :
     QObject(parent)
