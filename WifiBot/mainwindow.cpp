@@ -13,6 +13,7 @@ MainWindow::MainWindow(QWidget *parent) :
     rightOn = false ;
     cameraMoving = false;
 
+
     timer = new QTimer(this);
     connect(timer, SIGNAL(timeout()), this, SLOT(MySlot()));
     timer->start(100);
@@ -27,8 +28,10 @@ void MainWindow::MySlot(){
     if(((float)robot.getBatterie())/1.70>100){
         ui->batLevel->setValue(100);
         ui->viewCharging->setEnabled(true);
+        ui->chargingLed->setStyleSheet("QWidget{background-color: #E42B2B;border-radius: 6px;}");
     }else {
         ui->viewCharging->setEnabled(false);
+        ui->chargingLed->setStyleSheet("QWidget{background-color: #333333;border-radius: 6px;}");
         if(((float)robot.getBatterie())/1.32>100)
             ui->batLevel->setValue(100);
         else
