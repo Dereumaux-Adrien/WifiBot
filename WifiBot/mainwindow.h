@@ -77,7 +77,6 @@ private:
     bool downOn ;
     bool rightOn ;
     bool leftOn ;
-    bool cameraMoving;
 };
 
 #endif // MAINWINDOW_H

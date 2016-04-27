@@ -11,7 +11,6 @@ MainWindow::MainWindow(QWidget *parent) :
     downOn = false ;
     leftOn = false ;
     rightOn = false ;
-    cameraMoving = false;
 
 
     timer = new QTimer(this);
@@ -54,6 +53,7 @@ void MainWindow::on_verticalSlider_valueChanged(int value)
 // Avancer
 void MainWindow::on_pushUp_pressed()
 {
+    ui->pushUp->setStyleSheet("QPushButton {background-color: #222222;border: 1px solid black;}");
     upOn = true ;
     if(rightOn && !leftOn && !downOn){
         robot.setRightSpeed(speed/4);
@@ -73,6 +73,7 @@ void MainWindow::on_pushUp_pressed()
 
 void MainWindow::on_pushUp_released()
 {
+    ui->pushUp->setStyleSheet("QPushButton {background-color: #333333;border: 1px solid black;}");
     upOn = false ;
     robot.setRightSpeed(0);
     robot.setLeftSpeed(0);
@@ -82,6 +83,7 @@ void MainWindow::on_pushUp_released()
 // Tourner à droite
 void MainWindow::on_pushRight_pressed()
 {
+    ui->pushRight->setStyleSheet("QPushButton {background-color: #222222;border: 1px solid black;}");
     rightOn = true ;
     if(upOn && !downOn && !leftOn){
         robot.setRightSpeed(speed/4);
@@ -102,6 +104,7 @@ void MainWindow::on_pushRight_pressed()
 
 void MainWindow::on_pushRight_released()
 {
+    ui->pushRight->setStyleSheet("QPushButton {background-color: #333333;border: 1px solid black;}");
     rightOn = false ;
     robot.setRightSpeed(0);
     robot.setLeftSpeed(0);
@@ -111,6 +114,7 @@ void MainWindow::on_pushRight_released()
 // Tourner à gauche
 void MainWindow::on_pushLeft_pressed()
 {
+    ui->pushLeft->setStyleSheet("QPushButton {background-color: #222222;border: 1px solid black;}");
     leftOn = true ;
     if(upOn && !downOn && !rightOn){
         robot.setRightSpeed(speed);
@@ -129,6 +133,7 @@ void MainWindow::on_pushLeft_pressed()
 
 void MainWindow::on_pushLeft_released()
 {
+    ui->pushLeft->setStyleSheet("QPushButton {background-color: #333333;border: 1px solid black;}");
     leftOn = false ;
     robot.setRightSpeed(0);
     robot.setLeftSpeed(0);
@@ -138,6 +143,7 @@ void MainWindow::on_pushLeft_released()
 // Reculer
 void MainWindow::on_pushDown_pressed()
 {
+    ui->pushDown->setStyleSheet("QPushButton {background-color: #222222;border: 1px solid black;}");
     downOn = true ;
     if(rightOn && !leftOn && !upOn){
         robot.setRightSpeed(speed/4);
@@ -156,6 +162,7 @@ void MainWindow::on_pushDown_pressed()
 
 void MainWindow::on_pushDown_released()
 {
+    ui->pushDown->setStyleSheet("QPushButton {background-color: #333333;border: 1px solid black;}");
     downOn = false ;
     robot.setRightSpeed(0);
     robot.setLeftSpeed(0);
@@ -249,42 +256,32 @@ void MainWindow::keyReleaseEvent(QKeyEvent* event) {
 
 void MainWindow::on_pushCamUp_pressed()
 {
-    if(!cameraMoving){
-        cameraMoving=true;
-        robot.moveCamera('U');
-    }
+    ui->pushCamUp->setStyleSheet("QPushButton {background-color: #991058;border: 1px solid black;border-radius: 15px;}");
+    robot.moveCamera('U');
 }
 
 void MainWindow::on_pushCamLeft_pressed()
 {
-    if(!cameraMoving){
-        cameraMoving=true;
-        robot.moveCamera('L');
-    }
+    ui->pushCamLeft->setStyleSheet("QPushButton {background-color: #991058;border: 1px solid black;border-radius: 15px;}");
+    robot.moveCamera('L');
 }
 
 void MainWindow::on_pushCamDown_pressed()
 {
-    if(!cameraMoving){
-        cameraMoving=true;
-        robot.moveCamera('D');
-    }
+    ui->pushCamDown->setStyleSheet("QPushButton {background-color: #991058;border: 1px solid black;border-radius: 15px;}");
+    robot.moveCamera('D');
 }
 
 void MainWindow::on_pushCamRight_pressed()
 {
-    if(!cameraMoving){
-        cameraMoving=true;
-        robot.moveCamera('R');
-    }
+    ui->pushCamRight->setStyleSheet("QPushButton {background-color: #991058;border: 1px solid black;border-radius: 15px;}");
+    robot.moveCamera('R');
 }
 
 void MainWindow::on_pushCamFront_pressed()
 {
-    if(!cameraMoving){
-        cameraMoving=true;
-        robot.moveCamera('F');
-    }
+    ui->pushCamFront->setStyleSheet("QPushButton {background-color: #991058;border: 1px solid black;border-radius: 15px;}");
+    robot.moveCamera('F');
 }
 
 void MainWindow::on_pushConnect_pressed()
@@ -296,27 +293,27 @@ void MainWindow::on_pushConnect_pressed()
 
 void MainWindow::on_pushCamUp_released()
 {
-    cameraMoving=false;
+    ui->pushCamUp->setStyleSheet("QPushButton {background-color: #AA2169;border: 1px solid black;border-radius: 15px;}");
 }
 
 void MainWindow::on_pushCamLeft_released()
 {
-    cameraMoving=false;
+    ui->pushCamLeft->setStyleSheet("QPushButton {background-color: #AA2169;border: 1px solid black;border-radius: 15px;}");
 }
 
 void MainWindow::on_pushCamDown_released()
 {
-    cameraMoving=false;
+    ui->pushCamDown->setStyleSheet("QPushButton {background-color: #AA2169;border: 1px solid black;border-radius: 15px;}");
 }
 
 void MainWindow::on_pushCamRight_released()
 {
-    cameraMoving=false;
+    ui->pushCamRight->setStyleSheet("QPushButton {background-color: #AA2169;border: 1px solid black;border-radius: 15px;}");
 }
 
 void MainWindow::on_pushCamFront_released()
 {
-    cameraMoving=false;
+    ui->pushCamFront->setStyleSheet("QPushButton {background-color: #AA2169;border: 1px solid black;border-radius: 15px;}");
 }
 
 void MainWindow::on_cameraSpeed_valueChanged(int value)
